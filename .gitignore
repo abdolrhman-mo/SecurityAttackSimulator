@@ -1,0 +1,33 @@
+# Ignore build results
+[Bb]in/
+[Oo]bj/
+*.exe
+*.dll
+*.pdb
+*.cache
+*.log
+
+# Ignore user-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignore backup and temp files
+*.tmp
+*.bak
+*.ncb
+*.opendb
+*.VC.db
+
+# Ignore CMake cache (if you ever use CMake later)
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+
+# Visual Studio Code workspace settings (optional)
+.vscode/
+
+# Ignore generated folders
+ipch/
+*.aps
