@@ -33,4 +33,4 @@ A 3D interactive visualization tool that simulates network traffic and security 
 2. **Setup**:
    ```bash
    git clone https://github.com/abdolrhman-mo/SecurityAttackSimulator.git
-   cd melissoDeepseek
+   cd SecurityAttackSimulator
