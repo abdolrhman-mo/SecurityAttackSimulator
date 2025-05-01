@@ -28,6 +28,11 @@ cmake_install.cmake
 # Visual Studio Code workspace settings (optional)
 .vscode/
 
+# Ignore Visual Studio temporary files
+.vs/
+*.user
+*.suo
+
 # Ignore generated folders
 ipch/
 *.aps

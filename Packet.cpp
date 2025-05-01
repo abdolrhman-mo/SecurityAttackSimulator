@@ -23,10 +23,15 @@ Packet::Packet(Node* src, Node* dest, Link* pathLinks[], int numLinks, PacketTyp
     securityStatus = { false, false, 0.0f, 0 };
 
     // Set speed based on type
-    switch (type) {
+    /*switch (type) {
     case PacketType::DDOS: speed = 1.5f; break;
     case PacketType::INTRUSION: speed = 0.7f; break;
     default: speed = 1.0f; break;
+    }*/
+    switch (type) {
+    case PacketType::DDOS: speed = 0.75f; break;
+    case PacketType::INTRUSION: speed = 0.35f; break;
+    default: speed = 0.5f; break;
     }
 
     updateColor();
@@ -47,6 +52,12 @@ void Packet::setSecurityStatus(bool blocked, bool detected, float threat) {
 }
 
 void Packet::updateSecurityStatus() {
+    // Normal and encrypted packets pass
+    if (type == PacketType::NORMAL || type == PacketType::ENCRYPTED) {
+        securityStatus.isBlocked = false; // Never block normal/encrypted
+        return;
+    }
+
     if (type != PacketType::DDOS && type != PacketType::INTRUSION) return;
 
     // Increase threat level
@@ -192,7 +203,13 @@ void Packet::draw() {
         glEnd();
         break;
     case PacketType::ENCRYPTED:
+        glPushMatrix();
+        glTranslatef(x, y, z);
+        glScalef(size * encryptedSizeMult,
+            size * encryptedSizeMult,
+            size * encryptedSizeMult);
         glutSolidOctahedron();
+        glPopMatrix();
         break;
     case PacketType::BLOCKED:
         glutSolidTetrahedron();

@@ -25,8 +25,8 @@ int linkCount = 0;
 int packetCount = 0;
 
 // Camera variables
-float cameraX = 0.0f, cameraY = 5.0f, cameraZ = 15.0f;
-float cameraRotX = 30.0f, cameraRotY = 0.0f;
+float cameraX = 0.0f, cameraY = 10.0f, cameraZ = 13.0f;
+float cameraRotX = 40.0f, cameraRotY = 0.0f;
 bool mouseDown = false;
 int lastMouseX = 0, lastMouseY = 0;
 
@@ -218,7 +218,8 @@ void update() {
     updateDDoS(deltaTime);
     updateIntrusion(deltaTime);
 
-    if ((float)rand() / RAND_MAX < 0.1f) {
+    // The chance to create a packet each frame
+    if ((float)rand() / RAND_MAX < 0.005f) {
         createNewPacket();
     }
 
@@ -291,8 +292,8 @@ void display() {
 
 void keyboard(unsigned char key, int x, int y) {
     switch (key) {
-    case 'w': cameraY += CAMERA_SPEED; break;
-    case 's': cameraY -= CAMERA_SPEED; break;
+    case 'w': cameraZ -= CAMERA_SPEED; break;
+    case 's': cameraZ += CAMERA_SPEED; break;
     case 'a': cameraX -= CAMERA_SPEED; break;
     case 'd': cameraX += CAMERA_SPEED; break;
     case ' ': simulationPaused = !simulationPaused; break;

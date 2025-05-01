@@ -39,6 +39,7 @@ private:
     unsigned int currentLinkIndex;
     unsigned long startTime;
     SecurityStatus securityStatus;
+    float encryptedSizeMult = 1.0f; // Makes encrypted packets 30% smaller than default
 
 public:
     Packet(Node* src, Node* dest, Link* pathLinks[], int numLinks,
