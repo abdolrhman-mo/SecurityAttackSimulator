@@ -66,7 +66,7 @@ void drawUI() {
     // Disable depth testing for UI
     glDisable(GL_DEPTH_TEST);
 
-    // Draw UI background
+
     glColor4f(0.0f, 0.0f, 0.0f, 0.7f);
     glBegin(GL_QUADS);
     glVertex2f(10, 10);
@@ -75,7 +75,7 @@ void drawUI() {
     glVertex2f(10, 200);
     glEnd();
 
-    // Draw UI text
+
     glColor3f(1.0f, 1.0f, 1.0f);
     char buffer[128];
 
@@ -105,7 +105,7 @@ void drawUI() {
         drawText(20, 170, "SIMULATION PAUSED");
     }
 
-    // Draw help if enabled
+
     if (showHelp) {
         glColor4f(0.0f, 0.0f, 0.0f, 0.7f);
         glBegin(GL_QUADS);
@@ -126,6 +126,78 @@ void drawUI() {
         drawText(glutGet(GLUT_WINDOW_WIDTH) - 250, 170, "Esc - Exit");
     }
 
+    // --- BEGIN: Draw Legend Table (Top Right) ---
+    int legendX = glutGet(GLUT_WINDOW_WIDTH) - 270;
+    int legendY = 20;
+    int boxSize = 24;
+    int spacingY = 38;
+
+    // Draw background for legend
+    glColor4f(0.0f, 0.0f, 0.0f, 0.7f);
+    glBegin(GL_QUADS);
+    glVertex2f(legendX - 10, legendY - 10);
+    glVertex2f(legendX + 240, legendY - 10);
+    glVertex2f(legendX + 240, legendY + spacingY * 5 + 20);
+    glVertex2f(legendX - 10, legendY + spacingY * 5 + 20);
+    glEnd();
+
+    // Draw colored boxes and labels
+    // Normal (Regular safe traffic)
+    glColor3f(0.0f, 1.0f, 0.0f); // Green
+    glBegin(GL_QUADS);
+    glVertex2f(legendX, legendY);
+    glVertex2f(legendX + boxSize, legendY);
+    glVertex2f(legendX + boxSize, legendY + boxSize);
+    glVertex2f(legendX, legendY + boxSize);
+    glEnd();
+    glColor3f(1.0f, 1.0f, 1.0f);
+    drawText(legendX + boxSize + 12, legendY + 16, "Normal (Regular safe traffic)");
+
+    // DDoS Attack
+    glColor3f(1.0f, 0.0f, 0.0f); // Red
+    glBegin(GL_QUADS);
+    glVertex2f(legendX, legendY + spacingY);
+    glVertex2f(legendX + boxSize, legendY + spacingY);
+    glVertex2f(legendX + boxSize, legendY + boxSize + spacingY);
+    glVertex2f(legendX, legendY + boxSize + spacingY);
+    glEnd();
+    glColor3f(1.0f, 1.0f, 1.0f);
+    drawText(legendX + boxSize + 12, legendY + spacingY + 16, "DDoS Attack");
+
+    // Intrusion
+    glColor3f(1.0f, 0.5f, 0.0f); // Orange
+    glBegin(GL_QUADS);
+    glVertex2f(legendX, legendY + spacingY * 2);
+    glVertex2f(legendX + boxSize, legendY + spacingY * 2);
+    glVertex2f(legendX + boxSize, legendY + boxSize + spacingY * 2);
+    glVertex2f(legendX, legendY + boxSize + spacingY * 2);
+    glEnd();
+    glColor3f(1.0f, 1.0f, 1.0f);
+    drawText(legendX + boxSize + 12, legendY + spacingY * 2 + 16, "Intrusion");
+
+    // Encrypted (Secure communication)
+    glColor3f(0.0f, 0.0f, 1.0f); // Blue
+    glBegin(GL_QUADS);
+    glVertex2f(legendX, legendY + spacingY * 3);
+    glVertex2f(legendX + boxSize, legendY + spacingY * 3);
+    glVertex2f(legendX + boxSize, legendY + boxSize + spacingY * 3);
+    glVertex2f(legendX, legendY + boxSize + spacingY * 3);
+    glEnd();
+    glColor3f(1.0f, 1.0f, 1.0f);
+    drawText(legendX + boxSize + 12, legendY + spacingY * 3 + 16, "Encrypted (Secure communication)");
+
+    // Blocked (Stopped by firewall)
+    glColor3f(1.0f, 1.0f, 0.0f); // Yellow
+    glBegin(GL_QUADS);
+    glVertex2f(legendX, legendY + spacingY * 4);
+    glVertex2f(legendX + boxSize, legendY + spacingY * 4);
+    glVertex2f(legendX + boxSize, legendY + boxSize + spacingY * 4);
+    glVertex2f(legendX, legendY + boxSize + spacingY * 4);
+    glEnd();
+    glColor3f(1.0f, 1.0f, 1.0f);
+    drawText(legendX + boxSize + 12, legendY + spacingY * 4 + 16, "Blocked (Stopped by firewall)");
+    // --- END: Draw Legend Table (Top Right) ---
+
     // Restore OpenGL state
     glEnable(GL_DEPTH_TEST);
     glMatrixMode(GL_PROJECTION);
@@ -133,6 +205,7 @@ void drawUI() {
     glMatrixMode(GL_MODELVIEW);
     glPopMatrix();
 }
+
 
 void createNewPacket() {
     if (packetCount >= MAX_PACKETS || simulationPaused) return;
